@@ -1,0 +1,13 @@
+diff --git a/zbar/qrcode/qrdectxt.c b/zbar/qrcode/qrdectxt.c
+index e4f1864..0319133 100644
+--- a/zbar/qrcode/qrdectxt.c
++++ b/zbar/qrcode/qrdectxt.c
+@@ -61,7 +61,7 @@ int qr_code_data_list_extract_text(const qr_code_data_list *_qrlist,
+   /*This is the encoding the standard says is the default.*/
+   latin1_cd=iconv_open("UTF-8","ISO8859-1");
+   /*But this one is often used, as well.*/
+-  sjis_cd=iconv_open("UTF-8","SJIS");
++  sjis_cd=iconv_open("UTF-8","GB18030");
+   /*This is a trivial conversion just to check validity without extra code.*/
+   utf8_cd=iconv_open("UTF-8","UTF-8");
+   for(i=0;i<nqrdata;i++)if(!mark[i]){
