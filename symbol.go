@@ -33,6 +33,12 @@ func (this *Symbol) Data() string {
 	return C.GoString(s)
 }
 
+// Get the type of this symbol.
+// Compare it with types in constants to get the accurate symbol type.
+func (this *Symbol) Type() C.zbar_symbol_type_t {
+	return C.zbar_symbol_get_type(this.symbol)
+}
+
 // Iterate over all symbols after this symbol.
 // f will be called with each symbol's data as the argument
 func (this *Symbol) Each(f func(string)) {
