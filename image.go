@@ -7,38 +7,34 @@ package zbar
 import "C"
 
 import "image"
-import "image/color"
+import "image/draw"
+//import "image/color"
 import "unsafe"
 import "runtime"
 
 type Image struct {
 	image *C.zbar_image_t
-	raw []uint8
+	gray *image.Gray
 }
 
 // Create an ZBar image object from a Golang image.
 // To scan the image, call a Scanner.
-func FromImage(image image.Image) *Image {
+func FromImage(img image.Image) *Image {
 	ret := new(Image)
 	ret.image = C.zbar_image_create()
-	bounds := image.Bounds()
+	bounds := img.Bounds()
 	w := bounds.Max.X - bounds.Min.X
 	h := bounds.Max.Y - bounds.Min.Y
 
+	// Create a grayscale image
+	ret.gray = image.NewGray(bounds)
+	draw.Draw(
+		ret.gray, bounds, img,
+		image.ZP, draw.Over)
+
+	C.zbar_image_set_format(ret.image, C.ulong(0x30303859)) // Y800 (grayscale)
 	C.zbar_image_set_size(ret.image, C.uint(w), C.uint(h))
-
-	ret.raw = make([]uint8, w * h)
-
-	for x := 0; x < w; x++ {
-		for y := 0; y < h; y++ {
-			m := color.GrayModel.Convert(image.At(x, y)).(color.Gray)
-
-			ret.raw[y * w + x] = m.Y
-		}
-	}
-
-	C.zbar_image_set_format(ret.image, 0x30303859) // Y800 (grayscale)
-	C.zbar_image_set_data(ret.image, unsafe.Pointer(&ret.raw[0]), C.ulong(w * h), nil)
+	C.zbar_image_set_data(ret.image, unsafe.Pointer(&ret.gray.Pix[0]), C.ulong(len(ret.gray.Pix)), nil)
 
 	// finalizer
 	runtime.SetFinalizer(ret, (*Image).Destroy)
