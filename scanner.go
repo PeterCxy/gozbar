@@ -13,7 +13,7 @@ type Scanner struct {
 }
 
 func NewScanner() *Scanner {
-	r := &Scanner {
+	r := &Scanner{
 		scanner: C.zbar_image_scanner_create(),
 	}
 	runtime.SetFinalizer(r, (*Scanner).Destroy)

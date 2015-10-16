@@ -17,7 +17,7 @@ func (this *Symbol) Next() *Symbol {
 		return nil
 	}
 
-	return &Symbol {
+	return &Symbol{
 		symbol: n,
 	}
 }

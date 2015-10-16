@@ -8,13 +8,14 @@ import "C"
 
 import "image"
 import "image/draw"
+
 //import "image/color"
 import "unsafe"
 import "runtime"
 
 type Image struct {
 	image *C.zbar_image_t
-	gray *image.Gray
+	gray  *image.Gray
 }
 
 // Create an ZBar image object from a Golang image.
@@ -51,7 +52,7 @@ func (this *Image) First() *Symbol {
 		return nil
 	}
 
-	return &Symbol {
+	return &Symbol{
 		symbol: s,
 	}
 }

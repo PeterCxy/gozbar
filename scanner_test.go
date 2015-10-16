@@ -1,11 +1,11 @@
 package zbar
 
 import (
-	"testing"
 	"fmt"
-	"os"
-	"image/png"
 	"image/jpeg"
+	"image/png"
+	"os"
+	"testing"
 
 	//iconv "github.com/djimenez/iconv-go"
 )
