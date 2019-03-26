@@ -26,6 +26,7 @@ func TestBarcode(t *testing.T) {
 	s.SetConfig(0, CFG_ENABLE, 1)
 
 	s.Scan(img)
+	defer s.Destroy()
 
 	img.First().Each(func(str string) {
 		fmt.Println(str)
@@ -50,6 +51,7 @@ func TestQRCode(t *testing.T) {
 	s := NewScanner()
 	s.SetConfig(0, CFG_ENABLE, 1)
 	s.Scan(img)
+	defer s.Destroy()
 
 	img.First().Each(func(str string) {
 		// Charset decoding
@@ -77,6 +79,7 @@ func TestPhoto(t *testing.T) {
 	s := NewScanner()
 	s.SetConfig(0, CFG_ENABLE, 1)
 	s.Scan(img)
+	defer s.Destroy()
 
 	img.First().Each(func(str string) {
 		// Charset decoding

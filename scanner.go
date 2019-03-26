@@ -6,8 +6,6 @@ package zbar
 // #include <zbar.h>
 import "C"
 
-import "runtime"
-
 type Scanner struct {
 	scanner *C.zbar_image_scanner_t
 }
@@ -16,7 +14,7 @@ func NewScanner() *Scanner {
 	r := &Scanner{
 		scanner: C.zbar_image_scanner_create(),
 	}
-	runtime.SetFinalizer(r, (*Scanner).Destroy)
+	// runtime.SetFinalizer(r, (*Scanner).Destroy)
 	return r
 }
 
